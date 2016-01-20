@@ -34,7 +34,7 @@ float tx = 0.0f;
 float ty = 0.0f;
 
 // Taille des points des courbes du carreau
-const int CarreauLength = 3;
+const int nbPointPivots = 4;
 const int CarreauListLength = 4;
 
 // Ordre de la courbre  : Ordre
@@ -46,10 +46,10 @@ point3 TabPC[Ordre] = { point3(-2., -2., -1.), point3(-1., 1., 0.), point3(1., 1
 point3 TabPC2[Ordre] = { point3(-1., -1., 0.), point3(0., 1., 0.5), point3(2., 1., 0.), point3(1., -1., -1.) };
 
 // Points de controles du carreau paramétrique
-point3 P0[CarreauLength] = { point3(0., 0., 0.), point3(0., 1., 0.), point3(0., 2., 0.) };
-point3 P1[CarreauLength] = { point3(1., 0., 0.), point3(1., 1., 1.), point3(1., 2., 1.) };
-point3 P2[CarreauLength] = { point3(2., 0., 0.), point3(2., 1., 1.), point3(2., 2., 1.) };
-point3 P3[CarreauLength] = { point3(3., 0., 0.), point3(3., 1., 0.), point3(3., 2., 0.) };
+point3 P0[nbPointPivots] = { point3(0., 0., 0.), point3(0., 1., 0.), point3(0., 2., 0.), point3(0., 3., 0.) };
+point3 P1[nbPointPivots] = { point3(1., 0., 0.), point3(1., 1., 1.), point3(1., 2., 1.), point3(1., 2., 1.) };
+point3 P2[nbPointPivots] = { point3(2., 0., 0.), point3(2., 1., 2.), point3(2., 3., 2.), point3(2., 4., 2.) };
+point3 P3[nbPointPivots] = { point3(3., 0., 0.), point3(3., 2., 2.), point3(3., 3., 2.), point3(3., 4., 2.) };
 point3 *P[CarreauListLength] = { P0, P1, P2, P3 };
 
 point3 TabPC_Gen[10] = { point3(-1., -1., 0.), point3(0., 1., 0.5), point3(2., 1., 0.), point3(1., -1., -1.), point3(3., 0., 0.), point3(3., 1., 0.), point3(3., 2., 0.), point3(2., 0., 0.), point3(2., 1., 1.), point3(2., 2., 1.) };
@@ -107,7 +107,7 @@ point3 tensorielle(point3 **p, const float u, const float v, const int length, c
 
 void drawCasteljau(point3 * points, const int lg)
 {
-	glColor3f(0.f, 0.f, 1.f);
+	glColor3f(1.f, 1.f, 1.f);
 	glBegin(GL_LINE_STRIP);
 	point3 tmp;
 	for (float t = 0; t <= 1; t += 0.001)
@@ -149,7 +149,7 @@ void drawBezier(point3 * tabPC, const unsigned int lg)
 void drawCarreauParam(point3 **p)
 {
 	for (int i = 0; i < CarreauListLength; i++)
-		drawCasteljau(p[i], CarreauLength);
+		drawCasteljau(p[i], nbPointPivots);
 
 	float delta = 0.05f;
 
@@ -157,12 +157,12 @@ void drawCarreauParam(point3 **p)
 	{
 		for (float v = 0.f; v < 1.f; v += delta)
 		{
-			point3 p_1 = tensorielle(P, u, v, CarreauLength, CarreauListLength);
-			point3 p_2 = tensorielle(P, u + delta, v, CarreauLength, CarreauListLength);
-			point3 p_3 = tensorielle(P, u + delta, v + delta, CarreauLength, CarreauListLength);
-			point3 p_4 = tensorielle(P, u, v + delta, CarreauLength, CarreauListLength);
+			point3 p_1 = tensorielle(P, u, v, nbPointPivots, CarreauListLength);
+			point3 p_2 = tensorielle(P, u + delta, v, nbPointPivots, CarreauListLength);
+			point3 p_3 = tensorielle(P, u + delta, v + delta, nbPointPivots, CarreauListLength);
+			point3 p_4 = tensorielle(P, u, v + delta, nbPointPivots, CarreauListLength);
 
-			glColor3f(u, v, 1 - v);
+			glColor3f(0.5, 0.5, 0.5);
 			glBegin(GL_QUADS);
 
 			glVertex3f(p_1.x, p_1.y, p_1.z);
@@ -187,7 +187,7 @@ void drawSurfaceReglee(point3 * tabPC1, point3 * tabPC2)
 		point3 s2(0.f, 0.f, 0.f);
 		for (int i = 0; i < Ordre; i++)
 		{
-			float b = Bernstein(i, CarreauLength - 1, t);
+			float b = Bernstein(i, nbPointPivots - 1, t);
 			s = s + point3(tabPC1[i] * b);
 			s2 = s2 + point3(tabPC2[i] * b);
 		}
@@ -223,11 +223,11 @@ void drawSurfaceBalayee(point3 * tabpc, point3 *generatrice, const int directric
 			}
 
 			glBegin(GL_TRIANGLES);
-			glColor3f(1.f, 0.f, 0.f);
+			glColor3f(1.f, 1.f, 1.f);
 			glVertex3f(acc.x, acc.y, acc.z);
 			glVertex3f(acc2.x, acc2.y, acc2.z);
 			glVertex3f(acc3.x, acc3.y, acc3.z);
-			glColor3f(0.f, 1.f, 0.f);
+			glColor3f(0.f, 0.f, 1.f);
 			glVertex3f(acc4.x, acc4.y, acc4.z);
 			glVertex3f(acc.x, acc.y, acc.z);
 			glVertex3f(acc3.x, acc3.y, acc3.z);
@@ -265,7 +265,6 @@ static void init()
 	glClearDepth(1.0f); // Set background depth to farthest
 	glEnable(GL_DEPTH_TEST); // Enable depth testing for z-culling
 	glDepthFunc(GL_LEQUAL); // Set the type of depth-test
-	//glEnable(GL_CULL_FACE);
 	glShadeModel(GL_SMOOTH); // Enable smooth shading
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
 }
@@ -275,36 +274,21 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
+	float rotate = glutGet(GLUT_ELAPSED_TIME) / (50 % 360);
 	glLoadIdentity();
-
-	glRotatef(-angleY, 0.0f, 0.0f, 1.0f);
-	glRotatef(angleX, 0.0f, 1.0f, 0.0f);
-	glRotatef(-angleY, 0.0f, 0.0f, 1.0f);
-	glRotatef(angleX, 0.0f, 1.0f, 0.0f);
+	glRotated(rotate, 0, 1, 1);
 
 	TabPC[numPoint] = TabPC[numPoint] + point3(tx, ty, 0);
 
 	// Contraintes classe C
 	//addContrainteBezier2C1(TabPC, TabPC2, Ordre, Ordre);
 
-	// Enveloppe des points de controles
-	//glColor3f(1.0, 1.0, 0.0);
-	//drawEnveloppe(TabPC, Ordre);
-	//drawEnveloppe(TabPC2, Ordre);
+	 ////Enveloppe des points de controles
+		//glColor3f(1.0, 1.0, 0.0);
+		//drawEnveloppe(TabPC, Ordre);
+		//drawEnveloppe(TabPC2, Ordre);
 
-	// Affichage du point de controle courant
-	// On se déplace ensuite avec + et - 
-	// ° d'un point de contrôle au suivant (+)
-	// ° d'un point de contrôle au précédent (-)
-	/*glColor3f(0.0, 0.0, 1.0);
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(TabPC[numPoint].x + 0.1f, TabPC[numPoint].y + 0.1f, TabPC[numPoint].z);
-	glVertex3f(TabPC[numPoint].x + 0.1f, TabPC[numPoint].y - 0.1f, TabPC[numPoint].z);
-	glVertex3f(TabPC[numPoint].x - 0.1f, TabPC[numPoint].y - 0.1f, TabPC[numPoint].z);
-	glVertex3f(TabPC[numPoint].x - 0.1f, TabPC[numPoint].y + 0.1f, TabPC[numPoint].z);
-	glEnd();*/
-
-	// Courbe de Bézier
+	// //Courbe de Bézier
 	//drawBezier(TabPC, Ordre);
 	//drawBezier(TabPC2, Ordre);
 
@@ -314,7 +298,6 @@ void display(void)
 
 	drawSurfaceBalayee(TabPC, TabPC_Gen, Ordre, 10, 0.05f, 0.05f);
 
-	//glEnd();
 	glFlush();
 }
 
@@ -376,13 +359,19 @@ void keyboard(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
-GLvoid gestionSouris(int x, int y)
+//GLvoid gestionSouris(int x, int y)
+//{
+//	angleX = x * 720 / WIDTH;
+//	angleY = -(y * 180 / HEIGHT - 90) * 4;
+//
+//	glutPostRedisplay();
+//}
+GLvoid window_idle()
 {
-	angleX = x * 720 / WIDTH;
-	angleY = -(y * 180 / HEIGHT - 90) * 4;
 
 	glutPostRedisplay();
 }
+
 
 int main(int argc, char **argv)
 {
@@ -394,7 +383,8 @@ int main(int argc, char **argv)
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);
 	glutDisplayFunc(display);
-	glutPassiveMotionFunc(gestionSouris);
+	glutIdleFunc(&window_idle);
+	//glutPassiveMotionFunc(gestionSouris);
 	glutMainLoop();
 	return 0;
 }
