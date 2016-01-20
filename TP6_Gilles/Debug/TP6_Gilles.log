@@ -1,13 +1,14 @@
-﻿Build started 04/01/2016 22:32:18.
-     1>Project "C:\Users\pc\Documents\Visual Studio 2013\Projects\TP6_Gilles\TP6_Gilles\TP6_Gilles.vcxproj" on node 2 (Build target(s)).
+﻿Build started 20/01/2016 03:41:26.
+     1>Project "C:\Users\pc\Documents\GitHub\TP6_Gilles\TP6_Gilles\TP6_Gilles.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
+     1>c:\users\pc\documents\github\tp6_gilles\tp6_gilles\main.cpp(140): warning C4018: '<' : signed/unsigned mismatch
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pc\Documents\Visual Studio 2013\Projects\TP6_Gilles\Debug\TP6_Gilles.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\pc\Documents\Visual Studio 2013\Projects\TP6_Gilles\Debug\TP6_Gilles.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pc\Documents\Visual Studio 2013\Projects\TP6_Gilles\Debug\TP6_Gilles.lib" /MACHINE:X86 Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pc\Documents\GitHub\TP6_Gilles\Debug\TP6_Gilles.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\pc\Documents\GitHub\TP6_Gilles\Debug\TP6_Gilles.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pc\Documents\GitHub\TP6_Gilles\Debug\TP6_Gilles.lib" /MACHINE:X86 Debug\main.obj
          Debug\struct.obj
-         TP6_Gilles.vcxproj -> C:\Users\pc\Documents\Visual Studio 2013\Projects\TP6_Gilles\Debug\TP6_Gilles.exe
-     1>Done Building Project "C:\Users\pc\Documents\Visual Studio 2013\Projects\TP6_Gilles\TP6_Gilles\TP6_Gilles.vcxproj" (Build target(s)).
+         TP6_Gilles.vcxproj -> C:\Users\pc\Documents\GitHub\TP6_Gilles\Debug\TP6_Gilles.exe
+     1>Done Building Project "C:\Users\pc\Documents\GitHub\TP6_Gilles\TP6_Gilles\TP6_Gilles.vcxproj" (Build target(s)).
 
 Build succeeded.
 

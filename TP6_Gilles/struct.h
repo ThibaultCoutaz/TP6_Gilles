@@ -33,6 +33,8 @@ public:
 
 	point3      operator+(const point3 &op)const;
 
+	point3      operator-(const point3 &op)const;
+
 	point3&     operator*=(const double op);          //produit par un scalaire
 
 	point3      operator*(const double op)const;                 //idem
